@@ -1,0 +1,43 @@
+---
+import { getCollection } from 'astro:content'
+import Layout from '../../../layouts/Layout.astro'
+import type { Blog } from '../../../types'
+import { CATEGORIES, TAGS } from '../../../const'
+
+export async function getStaticPaths() {
+  const blogs = await getCollection('blog')
+  return blogs.map((b) => ({
+    params: {
+      slug: b.slug,
+    },
+    props: {
+      blog: b.data,
+      render: b.render
+    },
+  }))
+}
+
+const { blog, render } = Astro.props
+const { title, tags, category, noindex } = blog as Blog
+
+if (typeof title !== 'string' || title === '') {
+  throw new Error(`Invalid title: ${title}`)
+}
+
+if (!CATEGORIES.includes(category)) {
+  throw new Error(`Invalid category: ${category}`)
+}
+
+if (!TAGS.every((t) => tags.includes(t))) {
+  throw new Error(`Invalid tags: ${tags}`)
+}
+
+const { Content } = await render()
+---
+
+<Layout title={title} noindex={noindex}>
+  <h1>{title}</h1>
+  <div>category: <a href={`/ja/categories/${category}`}>{category}</a></div>
+  <div>tags: {tags.map((t) => <a href={`/ja/tags/${t}`}>{t}</a>)}</div>
+  <Content />
+</Layout>
