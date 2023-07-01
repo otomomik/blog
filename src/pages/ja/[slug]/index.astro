@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content'
 import Layout from '../../../layouts/Layout.astro'
 import type { Blog } from '../../../types'
 import { CATEGORIES, TAGS } from '../../../const'
+import { createHref } from '../../../utils'
 
 export async function getStaticPaths() {
   const blogs = await getCollection('blog')
@@ -12,11 +13,12 @@ export async function getStaticPaths() {
     },
     props: {
       blog: b.data,
-      render: b.render
+      render: b.render,
     },
   }))
 }
 
+const url = Astro.url
 const { blog, render } = Astro.props
 const { title, tags, category, noindex } = blog as Blog
 
@@ -37,7 +39,15 @@ const { Content } = await render()
 
 <Layout title={title} noindex={noindex}>
   <h1>{title}</h1>
-  <div>category: <a href={`/ja/categories/${category}`}>{category}</a></div>
-  <div>tags: {tags.map((t) => <a href={`/ja/tags/${t}`}>{t}</a>)}</div>
+  <div>
+    category: <a href={createHref({ path: `/categories/${category}`, url })}
+      >{category}</a
+    >
+  </div>
+  <div>
+    tags: {
+      tags.map((t) => <a href={createHref({ path: `/tags/${t}`, url })}>{t}</a>)
+    }
+  </div>
   <Content />
 </Layout>
