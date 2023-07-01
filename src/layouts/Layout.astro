@@ -1,4 +1,5 @@
 ---
+import { createHref } from '@/utils'
 export interface Props {
   title?: string
   noindex?: boolean
@@ -22,6 +23,16 @@ const url = Astro.url
     <title>{pageTitle}</title>
   </head>
   <body>
-    <slot />
+    <header>
+      <h1>
+        <a
+          href={createHref({
+            path: '',
+            url,
+          })}>otomomik BLOG</a
+        >
+      </h1>
+      <slot />
+    </header>
   </body>
 </html>
