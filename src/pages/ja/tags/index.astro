@@ -4,15 +4,15 @@ import Layout from '../../../layouts/Layout.astro'
 import { createHref } from '../../../utils'
 
 const url = Astro.url
-const tags = (await getCollection('blog')).map((post) => post.data.tags).flat()
+const tags = (await getCollection('blog')).map((b) => b.data.tags).flat()
 ---
 
 <Layout title="タグ一覧">
   <h1>タグ一覧</h1>
   {
-    tags.map((tag) => (
-      <a href={createHref({ path: `/tags/${tag}`, url })}>
-        <h2>{tag}</h2>
+    tags.map((t) => (
+      <a href={createHref({ path: `/tags/${t}`, url })}>
+        <h2>{t}</h2>
       </a>
     ))
   }

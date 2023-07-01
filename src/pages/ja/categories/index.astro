@@ -1,0 +1,21 @@
+---
+import { getCollection } from 'astro:content'
+import Layout from '../../../layouts/Layout.astro'
+import { createHref } from '../../../utils'
+
+const url = Astro.url
+const categories = (await getCollection('blog'))
+  .map((b) => b.data.category)
+  .flat()
+---
+
+<Layout title="カテゴリ一覧">
+  <h1>カテゴリ一覧</h1>
+  {
+    categories.map((c) => (
+      <a href={createHref({ path: `/categories/${c}`, url })}>
+        <h2>{c}</h2>
+      </a>
+    ))
+  }
+</Layout>

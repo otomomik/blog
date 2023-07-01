@@ -1,0 +1,37 @@
+---
+import { getCollection } from 'astro:content'
+import Layout from '../../../../layouts/Layout.astro'
+import { createHref } from '../../../../utils'
+
+export async function getStaticPaths() {
+  const categories = (await getCollection('blog'))
+    .map((b) => b.data.category)
+    .flat()
+  return categories.map((c) => ({
+    params: {
+      slug: c,
+    },
+  }))
+}
+
+const url = Astro.url
+const { slug } = Astro.params
+
+const category = slug
+const blogs = (await getCollection('blog')).filter(
+  (b) => b.data.category === category
+)
+---
+
+<Layout title={category}>
+  <h1>{category}</h1>
+  {
+    blogs.map((b) => (
+      <a href={createHref({ path: `/${b.slug}`, url })}>
+        <div>
+          <h2>{b.data.title}</h2>
+        </div>
+      </a>
+    ))
+  }
+</Layout>
