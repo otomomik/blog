@@ -1,4 +1,4 @@
-import type { CATEGORIES, TAGS } from './const'
+import type { CATEGORIES, TAGS } from '@/const'
 
 export type Blog = {
   title: string

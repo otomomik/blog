@@ -1,5 +1,5 @@
 import { z, defineCollection } from 'astro:content'
-import { CATEGORIES, TAGS } from '../const'
+import { CATEGORIES, TAGS } from '@/const'
 
 const blogCollection = defineCollection({
   type: 'content',

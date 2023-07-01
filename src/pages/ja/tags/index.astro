@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content'
-import Layout from '../../../layouts/Layout.astro'
-import { createHref } from '../../../utils'
+import Layout from '@/layouts/Layout.astro'
+import { createHref } from '@/utils'
 
 const url = Astro.url
 const tags = (await getCollection('blog')).map((b) => b.data.tags).flat()

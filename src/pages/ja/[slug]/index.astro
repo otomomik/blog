@@ -1,9 +1,9 @@
 ---
 import { getCollection } from 'astro:content'
-import Layout from '../../../layouts/Layout.astro'
-import type { Blog } from '../../../types'
-import { CATEGORIES, TAGS } from '../../../const'
-import { createHref } from '../../../utils'
+import Layout from '@/layouts/Layout.astro'
+import type { Blog } from '@/types'
+import { CATEGORIES, TAGS } from '@/const'
+import { createHref } from '@/utils'
 
 export async function getStaticPaths() {
   const blogs = await getCollection('blog')
